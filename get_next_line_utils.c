@@ -6,7 +6,7 @@
 /*   By: kaclaes <kaclaes@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 16:23:59 by kaclaes           #+#    #+#             */
-/*   Updated: 2026/05/13 18:37:30 by kaclaes          ###   ########.fr       */
+/*   Updated: 2026/05/14 17:52:01 by kaclaes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,37 @@
 
 static size_t	ft_strlen(char *str);
 
-char	*append_buff(char *cache, char *buffer)
+char	*append_buff(char **cache, char *buffer)
 {
 	char	*new_cache;
+	char	*old_cache;
 	size_t	i;
 
-	new_cache = malloc(ft_strlen(cache) + ft_strlen(buffer) + 1);
+	old_cache = *cache;
+	if (!old_cache || !buffer)
+		return (NULL);
+	new_cache = malloc(ft_strlen(old_cache) + ft_strlen(buffer) + 1);
 	if (!new_cache)
 		return (NULL);
 	i = 0;
-	while (*cache)
-		new_cache[i++] = *cache++;
+	while (old_cache[i])
+	{
+		new_cache[i] = old_cache[i];
+		i++;
+	}
 	while (*buffer)
 		new_cache[i++] = *buffer++;
-	return (free(cache), new_cache);
+	new_cache[i] = '\0';
+	*cache = new_cache;
+	return (free(old_cache), new_cache);
 }
 
 static size_t	ft_strlen(char *str)
 {
 	size_t	len;
 
+	if (!str)
+		return (0);
 	len = 0;
 	while (str[len])
 		len++;
@@ -54,7 +65,7 @@ int	nl(char *str)
 	return (0);
 }
 
-void	*read_into_buff(char *buff, int fd)
+char	*read_into_buff(char *buff, int fd)
 {
 	ssize_t	bytes_read;
 
