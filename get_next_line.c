@@ -6,7 +6,7 @@
 /*   By: kaclaes <kaclaes@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 16:23:55 by kaclaes           #+#    #+#             */
-/*   Updated: 2026/05/18 15:49:24 by kaclaes          ###   ########.fr       */
+/*   Updated: 2026/05/18 16:01:51 by kaclaes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ static char	*cache_update(int fd, char **cache);
 static char	*cache_get_line(char **line, char *cache);
 static char	*cache_trim(char **cache);
 
-#include <stdio.h>
 char	*get_next_line(int fd)
 {
 	static char	*cache[OPEN_MAX] = {NULL};
@@ -37,32 +36,12 @@ char	*get_next_line(int fd)
 	if (!cache_get_line(&line, cache[fd]))
 		return (free(cache[fd]), cache[fd] = NULL, NULL);
 	if (!cache_trim(&cache[fd]))
-		free(cache[fd]), cache[fd] = NULL;
+	{
+		free(cache[fd]);
+		cache[fd] = NULL;
+	}
 	return (line);
 }
-
-// #include <fcntl.h>
-// int main(void)
-// {
-// 	int fd = open("test/testLOBSTER.txt", O_RDONLY);
-
-// 	char *line = get_next_line(fd);
-// 	printf("%s", line);
-// 	line = get_next_line(fd);
-// 	printf("%s", line);
-// 	line = get_next_line(fd);
-// 	printf("%s", line);
-// 	line = get_next_line(fd);
-// 	printf("%s", line);
-// 	line = get_next_line(fd);
-// 	printf("%s", line);
-// 	line = get_next_line(fd);
-// 	printf("%s", line);
-// 	line = get_next_line(fd);
-// 	printf("%s", line);
-// 	line = get_next_line(fd);
-// 	printf("%s", line);
-// }
 
 // returns NULL if error occurs
 static char	*cache_update(int fd, char **cache)
