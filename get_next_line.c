@@ -6,7 +6,7 @@
 /*   By: kaclaes <kaclaes@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 16:23:55 by kaclaes           #+#    #+#             */
-/*   Updated: 2026/05/15 17:16:36 by kaclaes          ###   ########.fr       */
+/*   Updated: 2026/05/18 15:49:24 by kaclaes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*get_next_line(int fd)
 	line = NULL;
 	if (BUFF_SIZE <= 0 || fd < 0 || fd >= OPEN_MAX)
 		return (NULL);
-	if (!cache_update(fd, &cache[fd]))
+	if (!cache_update(fd, &cache[fd]) || cache[fd][0] == '\0')
 		return (free(cache[fd]), cache[fd] = NULL, NULL);
 	if (!cache_get_line(&line, cache[fd]))
 		return (free(cache[fd]), cache[fd] = NULL, NULL);
@@ -74,7 +74,7 @@ static char	*cache_update(int fd, char **cache)
 		*cache = malloc(1);
 		if (!*cache)
 			return (NULL);
-		*cache[0] = '\0';
+		(*cache)[0] = '\0';
 	}
 	buff = malloc((BUFF_SIZE + 1));
 	if (!buff)
@@ -99,7 +99,7 @@ static char	*cache_get_line(char **line, char *cache)
 	line_size = 0;
 	while (cache[line_size] != '\n' && cache[line_size])
 		line_size++;
-	*line = malloc(line_size);
+	*line = malloc(line_size + 2);
 	if (!*line)
 		return (NULL);
 	i = 0;
@@ -136,5 +136,5 @@ static char	*cache_trim(char **cache)
 	while (*old_cache)
 		new_cache[i++] = *old_cache++;
 	new_cache[i] = '\0';
-	return (*cache = new_cache, *cache);
+	return (free(*cache), *cache = new_cache, *cache);
 }

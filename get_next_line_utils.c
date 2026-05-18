@@ -6,7 +6,7 @@
 /*   By: kaclaes <kaclaes@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 16:23:59 by kaclaes           #+#    #+#             */
-/*   Updated: 2026/05/15 17:00:37 by kaclaes          ###   ########.fr       */
+/*   Updated: 2026/05/18 15:35:26 by kaclaes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,5 @@ char	*read_into_buff(char *buff, int fd)
 	if (bytes_read == -1)
 		return (NULL);
 	buff[bytes_read] = '\0';
-	if (buff[0] == '\0')
-		return (NULL);
 	return (buff);
 }
