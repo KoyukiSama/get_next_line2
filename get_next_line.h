@@ -6,7 +6,7 @@
 /*   By: kaclaes <kaclaes@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 16:24:02 by kaclaes           #+#    #+#             */
-/*   Updated: 2026/05/14 18:22:54 by kaclaes          ###   ########.fr       */
+/*   Updated: 2026/05/19 14:23:50 by kaclaes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # ifdef BUFFER_SIZE
 #  define BUFF_SIZE BUFFER_SIZE
 # else
-#  define BUFF_SIZE	6 
+#  define BUFF_SIZE	6
 # endif
 # define OPEN_MAX 1024
 
